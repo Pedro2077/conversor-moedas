@@ -1,0 +1,15 @@
+<div class="conversion-history">
+    <h1>Conversion History</h1>
+  
+    <div *ngFor="let conversion of conversionHistory; let i = index">
+      <div>
+        <p>{{ conversion.date }} - {{ conversion.baseCurrency }} to {{ conversion.targetCurrency }}: {{ conversion.amount }} -> {{ conversion.result }}</p>
+        <button mat-raised-button color="warn" (click)="deleteConversion(i)">Delete</button>
+      </div>
+    </div>
+  
+    <div *ngIf="conversionHistory.length === 0">
+      <p>No conversions to display.</p>
+    </div>
+  </div>
+  
