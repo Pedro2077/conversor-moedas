@@ -2,7 +2,7 @@
     <h1>Moedas disponíveis</h1>
     <mat-form-field>
       <mat-label>Procurar</mat-label>
-      <input matInput (keyup)="applyFilter($event)" placeholder="Filter currencies">
+      <input matInput (keyup)="applyFilter($event)" placeholder="Filtrar Moedas">
     </mat-form-field>
     
     <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
@@ -25,4 +25,5 @@
   
     <mat-paginator [pageSizeOptions]="[5, 10, 25]" showFirstLastButtons></mat-paginator>
   </div>
+  
   

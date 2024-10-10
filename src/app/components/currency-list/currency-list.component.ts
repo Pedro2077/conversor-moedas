@@ -12,6 +12,8 @@ import { CurrencyService } from '../../services/currency.service';
 export class CurrencyListComponent implements OnInit {
   displayedColumns: string[] = ['symbol', 'name'];
   dataSource = new MatTableDataSource<any>();
+  currencies: any = {};
+  currencyCodes: string[] = [];
   
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -21,6 +23,9 @@ export class CurrencyListComponent implements OnInit {
   ngOnInit(): void {
     this.currencyService.getCurrencies().subscribe((data: any) => {
       this.dataSource.data = data.supported_codes;
+      this.currencyService.getCurrenciesLocal().subscribe(data => {
+        this.currencies = Object.entries(data.conversion_rates).map(([code, rate]) => ({ code, rate }));
+      });
     });
   }
 

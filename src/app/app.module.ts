@@ -18,6 +18,7 @@ import { CurrencyListComponent } from './components/currency-list/currency-list.
 import { CurrencyConverterComponent } from './components/currency-converter/currency-converter.component';
 import { ConversionHistoryComponent } from './components/conversion-history/conversion-history.component';
 import { MatIconModule } from '@angular/material/icon';
+import { CurrencyService } from './services/currency.service'; 
 @NgModule({
   declarations: [
     AppComponent,
@@ -43,7 +44,7 @@ import { MatIconModule } from '@angular/material/icon';
     MatIconModule,
     RouterModule.forRoot([]) 
   ],
-  providers: [],
+  providers: [CurrencyService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

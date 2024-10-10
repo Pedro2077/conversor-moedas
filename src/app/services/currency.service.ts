@@ -7,13 +7,13 @@ import { Observable, of } from 'rxjs';
 })
 export class CurrencyService {
 
-  private apiUrl = 'https://www.exchangerate-api.com/v4/latest/USD';
+  private apiUrl = 'https://www.exchangerate-api.com/v4/latest/';
 
   constructor(private http: HttpClient) { }
 
   
-  getCurrencies(): Observable<any> {
-    return this.http.get(this.apiUrl);
+  getCurrencies(base: string = 'USD'): Observable<any> {
+    return this.http.get(`${this.apiUrl}${base}`);
   }
 
   
@@ -192,10 +192,12 @@ export class CurrencyService {
         "ZWL": 25.2813
       }
     };
-    return of(mockData); 
+    return of(mockData);
   }
 
+  
   convertCurrency(base: string, target: string, amount: number): Observable<any> {
-    return this.http.get(`${this.apiUrl}?base=${base}&symbols=${target}`);
+    const url = `${this.apiUrl}${base}?symbols=${target}`;
+    return this.http.get(url);
   }
 }
