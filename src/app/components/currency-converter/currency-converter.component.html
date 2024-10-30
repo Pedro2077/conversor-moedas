@@ -4,8 +4,8 @@
     <mat-form-field>
       <mat-label>Moeda base</mat-label>
       <mat-select formControlName="baseCurrency">
-        <mat-option *ngFor="let currency of currencies" [value]="currency[0]">
-          {{currency[0]}} - {{currency[1]}}
+        <mat-option *ngFor="let currency of currencies" [value]="currency.code">
+          {{currency.code}} - {{currency.rate}}
         </mat-option>
       </mat-select>
     </mat-form-field>
@@ -13,8 +13,8 @@
     <mat-form-field>
       <mat-label>Moeda alvo</mat-label>
       <mat-select formControlName="targetCurrency">
-        <mat-option *ngFor="let currency of currencies" [value]="currency[0]">
-          {{currency[0]}} - {{currency[1]}}
+        <mat-option *ngFor="let currency of currencies" [value]="currency.code">
+          {{currency.code}} - {{currency.rate}}
         </mat-option>
       </mat-select>
     </mat-form-field>

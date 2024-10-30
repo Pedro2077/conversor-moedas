@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { defaultIfEmpty } from 'rxjs/operators';
+
 
 @Injectable({
   providedIn: 'root'
@@ -14,12 +16,17 @@ export class CurrencyService {
   constructor(private http: HttpClient) { }
 
   
-  getCurrencies(base: string = 'USD'): Observable<any[]> {
+  getCurrencies(base: string = 'USD'): Observable<{ code: string, rate: number }[]> {
     return this.http.get<any>(`${this.apiUrl}${base}`).pipe(
-      map((response) => response.supported_codes) 
+      map(response => {
+        console.log('Response from API:', response); 
+        const conversionRates = response.conversion_rates;
+        return Object.entries(conversionRates).map(([code, rate]) => ({ code, rate: rate as number }));
+      }),
+      defaultIfEmpty([])  
     );
-
   }
+  
 
   
   getCurrenciesLocal(): Observable<any> {
@@ -201,9 +208,15 @@ export class CurrencyService {
   }
 
   
-  convertCurrency(base: string, target: string, amount: number): Observable<any> {
-    const url = `${this.apiUrl}${base}?symbols=${target}`;
-    return this.http.get(url);
+  convertCurrency(base: string, target: string, amount: number): Observable<number> {
+    return this.http.get<any>(`${this.apiUrl}${base}`).pipe(
+      map(response => {
+        const rate = response.conversion_rates[target];
+        return rate ? rate * amount : 0;  
+      }),
+      defaultIfEmpty(0)  
+    );
   }
+  
   
 }

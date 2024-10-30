@@ -31,8 +31,13 @@ export class CurrencyConverterComponent implements OnInit {
  
   onConvert() {
     const { baseCurrency, targetCurrency, amount } = this.conversionForm.value;
-    this.currencyService.convertCurrency(baseCurrency, targetCurrency, amount).subscribe((data: any) => {
-      this.conversionResult = `${amount} ${baseCurrency} = ${data.conversion_result} ${targetCurrency}`;
+    this.currencyService.convertCurrency(baseCurrency, targetCurrency, amount).subscribe((result: number | null) => {
+      if (result !== null) {
+        this.conversionResult = `${amount} ${baseCurrency} = ${result.toFixed(2)} ${targetCurrency}`;
+      } else {
+        this.conversionResult = 'Erro ao converter a moeda. Tente novamente.';
+      }
     });
   }
 }
+
