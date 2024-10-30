@@ -15,10 +15,12 @@ export class CurrencyConverterComponent implements OnInit {
   constructor(private currencyService: CurrencyService, private fb: FormBuilder) {}
 
   ngOnInit(): void {
-    this.currencyService.getCurrencies().subscribe((data: any) => {
-      this.currencies = data.supported_codes;
+    
+    this.currencyService.getCurrencies().subscribe((currencies) => {
+      this.currencies = currencies || []; 
     });
 
+   
     this.conversionForm = this.fb.group({
       baseCurrency: ['', Validators.required],
       targetCurrency: ['', Validators.required],
@@ -26,6 +28,7 @@ export class CurrencyConverterComponent implements OnInit {
     });
   }
 
+ 
   onConvert() {
     const { baseCurrency, targetCurrency, amount } = this.conversionForm.value;
     this.currencyService.convertCurrency(baseCurrency, targetCurrency, amount).subscribe((data: any) => {

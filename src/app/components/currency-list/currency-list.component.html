@@ -1,29 +1,25 @@
 <div class="currency-list">
-    <h1>Moedas disponíveis</h1>
-    <mat-form-field>
-      <mat-label>Procurar</mat-label>
-      <input matInput (keyup)="applyFilter($event)" placeholder="Filtrar Moedas">
-    </mat-form-field>
+  <h1>Moedas disponíveis</h1>
+  <mat-form-field>
+    <mat-label>Procurar</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="Filtrar Moedas">
+  </mat-form-field>
+
+  <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
     
-    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
-  
-     
-      <ng-container matColumnDef="symbol">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Símbolo </th>
-        <td mat-cell *matCellDef="let element"> {{element[0]}} </td>
-      </ng-container>
-  
-      
-      <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Nome </th>
-        <td mat-cell *matCellDef="let element"> {{element[1]}} </td>
-      </ng-container>
-  
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
-  
-    <mat-paginator [pageSizeOptions]="[5, 10, 25]" showFirstLastButtons></mat-paginator>
-  </div>
-  
-  
+    <ng-container matColumnDef="symbol">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Símbolo </th>
+      <td mat-cell *matCellDef="let element"> {{ element.symbol }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Nome </th>
+      <td mat-cell *matCellDef="let element"> {{ element.name }} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[5, 10, 25]" showFirstLastButtons></mat-paginator>
+</div>

@@ -1,19 +1,24 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CurrencyService {
 
-  private apiUrl = 'https://www.exchangerate-api.com/v4/latest/';
+  private apiKey = 'ec820992c68916dab465b926';
+  private apiUrl = `https://v6.exchangerate-api.com/v6/${this.apiKey}/latest/`;
 
   constructor(private http: HttpClient) { }
 
   
-  getCurrencies(base: string = 'USD'): Observable<any> {
-    return this.http.get(`${this.apiUrl}${base}`);
+  getCurrencies(base: string = 'USD'): Observable<any[]> {
+    return this.http.get<any>(`${this.apiUrl}${base}`).pipe(
+      map((response) => response.supported_codes) 
+    );
+
   }
 
   
@@ -200,4 +205,5 @@ export class CurrencyService {
     const url = `${this.apiUrl}${base}?symbols=${target}`;
     return this.http.get(url);
   }
+  
 }
